@@ -1,6 +1,7 @@
-import {Get, JsonController, QueryParam} from 'routing-controllers'
+import {CurrentUser, Get, JsonController, QueryParam} from 'routing-controllers'
 import Imap from "imap"
 import Connection from "imap"
+import {User} from "../model/user.model"
 
 @JsonController('/hello')
 export class HelloController {
@@ -49,6 +50,11 @@ export class HelloController {
 				})
 			})
 		})
+	}
+
+	@Get('/secret')
+	secret(@CurrentUser() user: User): string {
+		return `SO SECRET!!! ${user.email}`
 	}
 
 }
