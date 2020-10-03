@@ -1,14 +1,15 @@
 import {AccountService} from "./account.service"
-import Connection from "imap"
 import {Service} from "typedi"
 import {User} from "../model/user.model"
 import {ImapAccountModel} from "../model/imap-account.model"
 import {Error} from "../error/error"
+import {connect, ImapSimple} from "imap-simple"
+import Imap from "imap"
 
 @Service()
 export class ImapAccountService implements AccountService {
 
-	addAccount(user: User, accountDetails: Connection.Config): Promise<void> {
+	addAccount(user: User, accountDetails: Imap.Config): Promise<void> {
 		return ImapAccountModel
 			.create({
 				userEmail: user.email,
@@ -24,13 +25,13 @@ export class ImapAccountService implements AccountService {
 			.then(() => {})
 	}
 
-	listAccounts(user: User): Promise<Connection.Config[]> {
+	listAccounts(user: User): Promise<Imap.Config[]> {
 		return ImapAccountModel
 			.find({userEmail: user.email})
 			.then(ds => ds.map(d => d.config))
 	}
 
-	getByEmail(email: string): Promise<Connection.Config> {
+	getByEmail(email: string): Promise<Imap.Config> {
 		return ImapAccountModel
 			.findOne({email: email})
 			.then(model => {
@@ -39,13 +40,11 @@ export class ImapAccountService implements AccountService {
 			})
 	}
 
-	connect(user: User, accountDetails: Connection.Config): Promise<Connection> {
-		return new Promise<Connection>((resolve, reject) => {
-			const connection: Connection = new Connection(accountDetails)
-			connection.connect()
-			connection.once('ready', () => resolve(connection))
-			connection.once('error', (e: any) => reject(e))
-		})
+	/**
+	 * TODO: cache connections
+	 */
+	async connect(user: User, accountEmail: string): Promise<ImapSimple> {
+		return connect({imap: await this.getByEmail(accountEmail)})
 	}
 
 }
