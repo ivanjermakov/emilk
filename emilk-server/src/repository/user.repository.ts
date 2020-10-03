@@ -10,7 +10,7 @@ export class UserRepository {
 			.then()
 	}
 
-	save(user: User): Promise<User> {
+	create(user: User): Promise<User> {
 		return UserModel.create(user)
 	}
 

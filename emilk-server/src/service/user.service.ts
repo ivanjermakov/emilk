@@ -23,7 +23,7 @@ export class UserService {
 				if (user) throw new Error(400, 'user with such email already exists')
 
 				this.userRepository
-					.save({
+					.create({
 						email: registerUserDto.email,
 						hash: await hash(registerUserDto.password, 10)
 					})

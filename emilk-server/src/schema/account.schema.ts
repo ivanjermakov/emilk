@@ -1,6 +1,6 @@
 import {Schema} from "mongoose"
 
-export const ImapAccountSchema = new Schema({
+export const AccountSchema = new Schema({
 	userEmail: {
 		type: String,
 		required: true
@@ -15,4 +15,4 @@ export const ImapAccountSchema = new Schema({
 	}
 })
 
-ImapAccountSchema.index({userEmail: 1, email: 1}, {unique: true})
+AccountSchema.index({userEmail: 1, email: 1}, {unique: true})
