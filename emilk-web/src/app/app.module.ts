@@ -7,6 +7,7 @@ import {RegisterComponent} from './component/register/register.component'
 import {MailComponent} from './component/mail/mail.component'
 import {AppComponent} from "./component/app/app.component"
 import {FormsModule} from "@angular/forms"
+import {HttpClientModule} from "@angular/common/http"
 
 @NgModule({
 	declarations: [
@@ -18,7 +19,8 @@ import {FormsModule} from "@angular/forms"
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
-		FormsModule
+		FormsModule,
+		HttpClientModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

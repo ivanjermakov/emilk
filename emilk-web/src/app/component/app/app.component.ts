@@ -33,6 +33,7 @@ export class AppComponent {
 						first()
 					)
 					.subscribe(token => {
+						console.log('token')
 						if (token === '') {
 							this.router.navigate(['/log-in'])
 						} else {
