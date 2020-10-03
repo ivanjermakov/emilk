@@ -12,8 +12,8 @@ export class UserController {
 	) {}
 
 	@Post('/register')
-	@OnUndefined(200)
-	async register(@Body() registerUserDto: RegisterUserDto): Promise<void> {
+	@OnUndefined(204)
+	register(@Body() registerUserDto: RegisterUserDto): Promise<void> {
 		return this.userService.register(registerUserDto)
 	}
 
