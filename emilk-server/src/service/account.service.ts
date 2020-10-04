@@ -3,12 +3,14 @@ import {User} from "../model/user.model"
 import {Error} from "../error/error"
 import Imap from "imap"
 import {AccountRepository} from "../repository/account.repository"
+import {AccountCachingService} from "./account-caching.service"
 
 @Service()
 export class AccountService {
 
 	constructor(
-		private accountRepository: AccountRepository
+		private accountRepository: AccountRepository,
+		private accountCachingService: AccountCachingService
 	) {}
 
 	addAccount(user: User, accountDetails: Imap.Config): Promise<void> {
@@ -41,16 +43,21 @@ export class AccountService {
 			})
 	}
 
-	/**
-	 * TODO: cache connections
-	 */
 	async connect(user: User, accountEmail: string): Promise<Imap> {
-		let connection = new Imap(await this.getByEmail(accountEmail))
-		connection.connect()
-		return new Promise<Imap>((resolve, reject) => {
-			connection.once('ready', () => resolve(connection))
-			connection.once('error', (e: any) => reject(new Error(400, e.message)))
-		})
+		let cached = this.accountCachingService.get(accountEmail)
+		if (cached) {
+			return Promise.resolve(cached)
+		} else {
+			let connection = new Imap(await this.getByEmail(accountEmail))
+			connection.connect()
+			return new Promise<Imap>((resolve, reject) => {
+				connection.once('ready', () => {
+					this.accountCachingService.cache(accountEmail, connection)
+					return resolve(connection)
+				})
+				connection.once('error', (e: any) => reject(new Error(400, e.message)))
+			})
+		}
 	}
 
 }
