@@ -1,7 +1,7 @@
 export interface Folder {
-	children: Boxes
+  children: Boxes
 }
 
 export interface Boxes {
-	[name: string]: Folder
+  [name: string]: Folder
 }
