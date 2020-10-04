@@ -1,37 +1,28 @@
 import Imap from "imap"
 import {Service} from "typedi"
 import {User} from "../model/user.model"
+import {AccountService} from "./account.service"
 import {ImapSimple} from "imap-simple"
 
 @Service()
 export class BoxService {
 
-	listBoxes(user: User, connection: ImapSimple): Promise<Imap.MailBoxes> {
-		return connection.getBoxes()
+	constructor(
+		private accountService: AccountService
+	) {}
+
+	async listBoxes(user: User, accountEmail: string): Promise<Imap.MailBoxes> {
+		return new ImapSimple(await this.accountService.connect(user, accountEmail)).getBoxes()
 	}
 
-	/**
-	 * - remove all properties except for `children`
-	 * - replace null children mailboxes with empty maps
-	 */
-	formatMailboxes(mailBoxes: Imap.MailBoxes): Imap.MailBoxes {
-		if (mailBoxes) {
-			Object
-				.keys(mailBoxes)
-				.map(k => mailBoxes[k])
-				.forEach(f => {
-					delete (f as any).parent
-					delete (f as any).attribs
-					delete (f as any).delimiter
-					delete (f as any).special_use_attrib
-					if (!f.children) {
-						f.children = {}
-					} else {
-						this.formatMailboxes(f.children)
-					}
-				})
-		}
-		return mailBoxes
+	async getBox(user: User, accountEmail: string, boxName: string): Promise<Imap.Box> {
+		let connection = await this.accountService.connect(user, accountEmail)
+		return new Promise<Imap.Box>((resole, reject) => {
+			connection.openBox(boxName, (error, box) => {
+				if (error) reject(error)
+				resole(box)
+			})
+		})
 	}
 
 }

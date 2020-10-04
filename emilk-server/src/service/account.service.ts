@@ -1,7 +1,6 @@
 import {Service} from "typedi"
 import {User} from "../model/user.model"
 import {Error} from "../error/error"
-import {connect, ImapSimple} from "imap-simple"
 import Imap from "imap"
 import {AccountRepository} from "../repository/account.repository"
 
@@ -45,8 +44,13 @@ export class AccountService {
 	/**
 	 * TODO: cache connections
 	 */
-	async connect(user: User, accountEmail: string): Promise<ImapSimple> {
-		return connect({imap: await this.getByEmail(accountEmail)})
+	async connect(user: User, accountEmail: string): Promise<Imap> {
+		let connection = new Imap(await this.getByEmail(accountEmail))
+		connection.connect()
+		return new Promise<Imap>((resolve, reject) => {
+			connection.once('ready', () => resolve(connection))
+			connection.once('error', (e: any) => reject(new Error(400, e.message)))
+		})
 	}
 
 }

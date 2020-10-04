@@ -1,8 +1,8 @@
 import {Body, CurrentUser, Delete, Get, JsonController, OnUndefined, Put, QueryParam} from "routing-controllers"
 import {User} from "../model/user.model"
 import {AccountService} from "../service/account.service"
-import Imap from "imap"
 import {Error} from "../error/error"
+import {ConfigDto, fromImapConfig} from "../dto/config.dto"
 
 @JsonController('/account')
 export class AccountController {
@@ -13,8 +13,9 @@ export class AccountController {
 
 	@Put()
 	@OnUndefined(204)
-	add(@CurrentUser() user: User, @Body() accountDetails: Imap.Config): Promise<void> {
-		return this.accountService.addAccount(user, accountDetails)
+	add(@CurrentUser() user: User, @Body() accountDetails: ConfigDto): Promise<void> {
+		return this.accountService
+			.addAccount(user, accountDetails)
 	}
 
 	@Delete()
@@ -27,13 +28,10 @@ export class AccountController {
 	}
 
 	@Get('/all')
-	all(@CurrentUser() user: User): Promise<Imap.Config[]> {
+	all(@CurrentUser() user: User): Promise<ConfigDto[]> {
 		return this.accountService
 			.listAccounts(user)
-			.then(accounts => accounts.map(a => {
-				delete (a as any).password
-				return a
-			}))
+			.then(configs => configs.map(fromImapConfig))
 	}
 
 	@Get('/connect')
