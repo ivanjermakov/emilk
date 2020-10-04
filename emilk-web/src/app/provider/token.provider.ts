@@ -12,11 +12,11 @@ export class TokenProvider {
 	constructor(
 		private tokenService: TokenService
 	) {
-		this.token.set(this.tokenService.getLocalStorageToken() || '')
+		this.token.set(this.tokenService.get() || '')
 	}
 
 	setToken(token: string): void {
-		this.tokenService.setToken(token)
+		this.tokenService.set(token)
 		this.token.set(token)
 	}
 

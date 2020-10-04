@@ -6,23 +6,25 @@ import {environment} from "../../environments/environment"
 })
 export class TokenService {
 
+	name: string = environment.tokenHeaderName
+
 	constructor() {
 	}
 
-	getLocalStorageToken(): string | null {
-		return localStorage.getItem(environment.tokenHeaderName)
+	get(): string | null {
+		return localStorage.getItem(this.name)
 	}
 
-	setToken(token: string): void {
+	set(token: string): void {
 		if (token === '') {
-			this.removeLocalStorageToken()
+			this.remove()
 		} else {
-			localStorage.setItem(environment.tokenHeaderName, token)
+			localStorage.setItem(this.name, token)
 		}
 	}
 
-	removeLocalStorageToken(): void {
-		localStorage.removeItem(environment.tokenHeaderName)
+	remove(): void {
+		localStorage.removeItem(this.name)
 	}
 
 }

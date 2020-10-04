@@ -1,0 +1,9 @@
+<div class='accounts' (clickOutside)='expanded = false' *ngIf='accounts'>
+	<app-account [account]='activeAccount' (click)='expanded = true'></app-account>
+	<div class='other-accounts' *ngIf='expanded'>
+		<app-account *ngFor='let account of otherAccounts' [account]='account'
+		             (click)='setActive(account)'></app-account>
+		<h1>Mailboxes</h1>
+		<app-box *ngIf='boxes' [boxes]='boxes'></app-box>
+	</div>
+</div>
