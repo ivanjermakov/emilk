@@ -1,9 +1,9 @@
-import {Document, model} from "mongoose"
-import {UserSchema} from "../schema/user.schema"
+import {Document, model} from 'mongoose'
+import {UserSchema} from '../schema/user.schema'
 
 export interface User {
-	email: string,
-	hash: string
+    email: string,
+    hash: string
 }
 
 export interface UserDocument extends User, Document {}

@@ -1,21 +1,21 @@
-import Imap from "imap"
+import Imap from 'imap'
 
 export interface BoxMessagesDto {
-	total: number
-	new: number
-	unseen: number
+    total: number
+    new: number
+    unseen: number
 }
 
 export interface BoxDto {
-	name: string
-	readonly?: boolean
-	messages: BoxMessagesDto
+    name: string
+    readonly?: boolean
+    messages: BoxMessagesDto
 }
 
 export const fromImapBox = (box: Imap.Box): BoxDto => {
-	return {
-		name: box.name,
-		readonly: box.readOnly,
-		messages: box.messages
-	}
+    return {
+        name: box.name,
+        readonly: box.readOnly,
+        messages: box.messages
+    }
 }
