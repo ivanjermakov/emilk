@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core'
 import {Account} from '../../model/Account'
-import {AccountsProvider} from '../../provider/accounts.provider'
+import {AccountProvider} from '../../provider/account-provider.service'
 import {ActiveAccountService} from '../../service/active-account.service'
-import {filter} from 'rxjs/operators'
 import {fadeInOutAnimation} from '../../util/animation'
+import {filter} from 'rxjs/operators'
 
 @Component({
     selector: 'app-left',
@@ -17,32 +17,26 @@ export class LeftComponent implements OnInit {
 
     accountsExpanded: boolean = false
     accounts: Account[]
-    activeAccount: Account
+    currentAccount: Account
 
     constructor(
-        private accountsProvider: AccountsProvider,
+        private accountsProvider: AccountProvider,
         private activeAccountService: ActiveAccountService
     ) {}
 
     ngOnInit(): void {
         this.accountsProvider.accounts.observable
             .pipe(filter(a => !!a))
-            .subscribe(accounts => {
-                this.accounts = accounts
-                let activeAccountEmail = this.activeAccountService.get()
-                let activeAccount = this.accounts.find(a => activeAccountEmail && a.user === activeAccountEmail)
-                // TODO: activeAccountProvider
-                if (activeAccount) {
-                    this.activeAccount = activeAccount
-                } else {
-                    this.activeAccount = this.accounts[0]
-                }
-            })
+            .subscribe(accounts => this.accounts = accounts)
+
+        this.accountsProvider.currentAccount.observable
+            .pipe(filter(a => !!a))
+            .subscribe(current => this.currentAccount = current)
     }
 
     setActive(account: Account) {
         this.activeAccountService.set(account.user)
-        this.accountsProvider.accounts.update()
+        this.accountsProvider.currentAccount.set(account)
         this.accountsExpanded = false
     }
 

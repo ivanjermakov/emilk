@@ -1,8 +1,8 @@
-<app-active-account *ngIf='activeAccount' [account]='activeAccount'
+<app-active-account *ngIf='currentAccount' [account]='currentAccount'
                     (click)='accountsExpanded = !accountsExpanded' (clickOutside)='accountsExpanded = false'>
 </app-active-account>
 <div class='popup-container' *ngIf='accountsExpanded' [@fadeInOut]>
-    <app-accounts-popup [accounts]='accounts' [activeAccount]='activeAccount'
+    <app-accounts-popup [accounts]='accounts' [currentAccount]='currentAccount'
                         (onActiveAccountChange)='setActive($event)'>
     </app-accounts-popup>
 </div>

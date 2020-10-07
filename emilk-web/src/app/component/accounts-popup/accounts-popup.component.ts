@@ -12,7 +12,7 @@ export class AccountsPopupComponent implements OnInit, OnChanges {
     accounts: Account[]
 
     @Input()
-    activeAccount: Account
+    currentAccount: Account
 
     @Output()
     onActiveAccountChange: EventEmitter<Account> = new EventEmitter<Account>()
@@ -23,8 +23,8 @@ export class AccountsPopupComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         this.accounts = this.accounts.sort((a, b) => {
-            if (a.user === this.activeAccount.user) return -1
-            if (b.user === this.activeAccount.user) return 1
+            if (a.user === this.currentAccount.user) return -1
+            if (b.user === this.currentAccount.user) return 1
             return a.user > b.user ? 1 : -1
         })
     }

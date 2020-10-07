@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core'
 import {ObservableData} from '../util/observable-data'
 import {Boxes} from '../model/Boxes'
-import {AccountsProvider} from './accounts.provider'
+import {AccountProvider} from './account-provider.service'
 import {filter} from 'rxjs/operators'
 import {BoxService} from '../service/box.service'
 import {ActiveAccountService} from '../service/active-account.service'
@@ -12,9 +12,10 @@ import {ActiveAccountService} from '../service/active-account.service'
 export class BoxesProvider {
 
     boxes: ObservableData<Boxes> = new ObservableData<Boxes>()
+    currentBox: ObservableData<string> = new ObservableData<string>()
 
     constructor(
-        private accountsProvider: AccountsProvider,
+        private accountsProvider: AccountProvider,
         private activeAccountService: ActiveAccountService,
         private boxService: BoxService
     ) {

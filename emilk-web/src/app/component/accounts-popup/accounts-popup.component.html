@@ -2,7 +2,7 @@
     <div class='accounts-container'>
         <app-account *ngFor='let account of accounts'
                      [account]='account'
-                     [active]='account.user === activeAccount.user'
+                     [active]='account.user === currentAccount.user'
                      (click)='onActiveAccountChange.emit(account)'>
         </app-account>
     </div>

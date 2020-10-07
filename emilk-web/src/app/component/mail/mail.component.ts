@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core'
 import {TokenProvider} from '../../provider/token.provider'
 import {filter, first} from 'rxjs/operators'
 import {AccountService} from '../../service/account.service'
-import {AccountsProvider} from '../../provider/accounts.provider'
+import {AccountProvider} from '../../provider/account-provider.service'
 
 @Component({
     selector: 'app-mail',
@@ -13,7 +13,7 @@ export class MailComponent implements OnInit {
 
     constructor(
         private tokenProvider: TokenProvider,
-        private accountProvider: AccountsProvider,
+        private accountProvider: AccountProvider,
         private accountService: AccountService
     ) {}
 
