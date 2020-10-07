@@ -7,8 +7,8 @@ import {Account} from '../model/Account'
 })
 export class AccountsProvider {
 
-  accounts: ObservableData<Account[]> = new ObservableData<Account[]>()
+    accounts: ObservableData<Account[]> = new ObservableData<Account[]>()
 
-  constructor() {}
+    constructor() {}
 
 }

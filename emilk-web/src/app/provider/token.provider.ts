@@ -3,21 +3,21 @@ import {ObservableData} from '../util/observable-data'
 import {TokenService} from '../service/token.service'
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TokenProvider {
 
-  token: ObservableData<string> = new ObservableData<string>()
+    token: ObservableData<string> = new ObservableData<string>()
 
-  constructor(
-      private tokenService: TokenService
-  ) {
-    this.token.set(this.tokenService.get() || '')
-  }
+    constructor(
+        private tokenService: TokenService
+    ) {
+        this.token.set(this.tokenService.get() || '')
+    }
 
-  setToken(token: string): void {
-    this.tokenService.set(token)
-    this.token.set(token)
-  }
+    setToken(token: string): void {
+        this.tokenService.set(token)
+        this.token.set(token)
+    }
 
 }

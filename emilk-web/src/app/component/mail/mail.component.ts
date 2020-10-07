@@ -5,33 +5,33 @@ import {AccountService} from '../../service/account.service'
 import {AccountsProvider} from '../../provider/accounts.provider'
 
 @Component({
-  selector: 'app-mail',
-  templateUrl: './mail.component.html',
-  styleUrls: ['./mail.component.sass']
+    selector: 'app-mail',
+    templateUrl: './mail.component.html',
+    styleUrls: ['./mail.component.sass']
 })
 export class MailComponent implements OnInit {
 
-  constructor(
-      private tokenProvider: TokenProvider,
-      private accountProvider: AccountsProvider,
-      private accountService: AccountService
-  ) {}
+    constructor(
+        private tokenProvider: TokenProvider,
+        private accountProvider: AccountsProvider,
+        private accountService: AccountService
+    ) {}
 
-  ngOnInit(): void {
-    this.tokenProvider.token.observable
-        .pipe(
-            filter(t => !!t),
-            first()
+    ngOnInit(): void {
+        this.tokenProvider.token.observable
+            .pipe(
+                filter(t => !!t),
+                first()
+            )
+            .subscribe(() => {
+                this.fetchAccounts()
+            })
+    }
+
+    private fetchAccounts() {
+        this.accountService.all().subscribe(accounts =>
+            this.accountProvider.accounts.set(accounts)
         )
-        .subscribe(() => {
-          this.fetchAccounts()
-        })
-  }
-
-  private fetchAccounts() {
-    this.accountService.all().subscribe(accounts =>
-        this.accountProvider.accounts.set(accounts)
-    )
-  }
+    }
 
 }
