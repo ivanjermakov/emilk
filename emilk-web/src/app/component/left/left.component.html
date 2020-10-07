@@ -1,0 +1,9 @@
+<app-active-account *ngIf='activeAccount' [account]='activeAccount'
+                    (click)='accountsExpanded = !accountsExpanded' (clickOutside)='accountsExpanded = false'>
+</app-active-account>
+<div class='popup-container'>
+    <app-accounts-popup *ngIf='accountsExpanded' [accounts]='accounts' [activeAccount]='activeAccount'
+                        (onActiveAccountChange)='setActive($event)'>
+    </app-accounts-popup>
+</div>
+<app-previews-boxes-switcher></app-previews-boxes-switcher>

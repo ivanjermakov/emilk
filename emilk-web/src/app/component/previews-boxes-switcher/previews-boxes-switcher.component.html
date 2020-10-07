@@ -1,0 +1,7 @@
+<div class='switcher'>
+    <p (click)='messagesActive = true' [class.active]='messagesActive'>messages</p>
+    <i class='fa fa-circle'></i>
+    <p (click)='messagesActive = false' [class.active]='!messagesActive'>mailboxes</p>
+</div>
+<app-boxes *ngIf='!messagesActive'></app-boxes>
+<app-previews *ngIf='messagesActive'></app-previews>

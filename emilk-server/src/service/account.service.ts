@@ -20,7 +20,7 @@ export class AccountService {
                 email: accountDetails.user,
                 config: accountDetails
             })
-            .then()
+            .then(() => {})
     }
 
     removeAccount(user: User, email: string): Promise<void> {

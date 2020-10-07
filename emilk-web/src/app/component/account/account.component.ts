@@ -11,6 +11,12 @@ export class AccountComponent implements OnInit {
   @Input()
   account: Account
 
+  @Input()
+  active: boolean
+
+  @Input()
+  expanded: boolean = false
+
   constructor() {}
 
   ngOnInit(): void {}

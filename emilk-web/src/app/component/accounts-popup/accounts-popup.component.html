@@ -1,0 +1,10 @@
+<ng-container *ngIf='accounts'>
+    <div class='accounts-container'>
+        <app-account *ngFor='let account of accounts'
+                     [account]='account'
+                     [active]='account.user === activeAccount.user'
+                     (click)='onActiveAccountChange.emit(account)'>
+        </app-account>
+    </div>
+    <app-account-actions></app-account-actions>
+</ng-container>

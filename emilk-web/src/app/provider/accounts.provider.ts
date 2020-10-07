@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core'
-import {ObservableData} from '../util/ObservableData'
+import {ObservableData} from '../util/observable-data'
 import {Account} from '../model/Account'
 
 @Injectable({

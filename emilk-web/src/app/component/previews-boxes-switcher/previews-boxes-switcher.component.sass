@@ -1,0 +1,25 @@
+@import 'src/app/style/color'
+@import 'src/app/style/constant'
+
+\:host
+  display: flex
+  flex-direction: column
+
+  .switcher
+    display: flex
+    align-items: center
+    align-self: center
+
+    padding: 10px 20px
+
+    i
+      font-size: 10px
+      color: $light
+      margin: 0 10px
+
+    p
+      color: $gray
+      cursor: pointer
+
+    .active
+      color: $black

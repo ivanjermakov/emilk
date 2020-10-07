@@ -1,0 +1,30 @@
+@import 'src/app/style/color'
+@import 'src/app/style/constant'
+
+\:host
+  display: flex
+  align-items: center
+  top: 0
+
+  padding: 10px 20px
+
+  cursor: pointer
+
+  p
+    width: 300px
+    white-space: nowrap
+    text-overflow: ellipsis
+    overflow: hidden
+
+  i
+    font-size: $font-size-big
+
+  .fa-user
+    padding-right: 10px
+    color: $dark
+
+  .fa-check
+    padding-left: 10px
+
+  &:hover
+    background: $light
