@@ -1,6 +1,13 @@
 @import 'src/app/style/color'
 
 \:host
-  height: 100%
-
   background: $bright
+  display: flex
+
+  .messages-container
+    display: flex
+    flex-direction: column
+
+    overflow-y: auto
+
+    min-height: 0

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core'
 import {TokenProvider} from '../../provider/token.provider'
 import {filter, first} from 'rxjs/operators'
 import {AccountService} from '../../service/account.service'
-import {AccountProvider} from '../../provider/account-provider.service'
+import {AccountProvider} from '../../provider/account.provider'
 
 @Component({
     selector: 'app-mail',

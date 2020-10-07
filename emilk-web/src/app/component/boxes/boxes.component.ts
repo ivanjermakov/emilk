@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, EventEmitter, OnInit, Output} from '@angular/core'
 import {Boxes} from '../../model/Boxes'
-import {BoxesProvider} from '../../provider/boxes.provider'
+import {BoxProvider} from '../../provider/box.provider'
 
 @Component({
     selector: 'app-boxes',
@@ -9,14 +9,21 @@ import {BoxesProvider} from '../../provider/boxes.provider'
 })
 export class BoxesComponent implements OnInit {
 
+    @Output()
+    onBoxSelect: EventEmitter<string> = new EventEmitter<string>()
+
     boxes: Boxes
 
     constructor(
-        private boxesProvider: BoxesProvider
+        private boxProvider: BoxProvider
     ) {}
 
     ngOnInit(): void {
-        this.boxesProvider.boxes.observable.subscribe(boxes => this.boxes = boxes)
+        this.boxProvider.boxes.observable
+            .subscribe(boxes => this.boxes = boxes)
+
+        this.onBoxSelect
+            .subscribe(box => this.boxProvider.currentBox.set(box))
     }
 
 }

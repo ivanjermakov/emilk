@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core'
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 import {Folder} from '../../model/Boxes'
 import {faCaretRight} from '@fortawesome/free-solid-svg-icons'
 import {slideFromLeftAnimation} from '../../util/animation'
@@ -19,6 +19,9 @@ export class FolderComponent implements OnInit {
     @Input()
     folder: Folder
 
+    @Output()
+    onBoxSelect: EventEmitter<string> = new EventEmitter<string>()
+
     expanded: boolean = false
     isFolder: boolean
 
@@ -30,8 +33,11 @@ export class FolderComponent implements OnInit {
         this.isFolder = Object.keys(this.folder.children).length !== 0
     }
 
-    toggleExpand() {
-        if (!this.isFolder) return
-        this.expanded = !this.expanded
+    toggleClickOrExpand() {
+        if (this.isFolder) {
+            this.expanded = !this.expanded
+        } else {
+            this.onBoxSelect.emit(this.name)
+        }
     }
 }

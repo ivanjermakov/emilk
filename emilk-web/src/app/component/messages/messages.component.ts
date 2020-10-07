@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core'
+import {MessagePreview} from '../../model/MessagePreview'
+import {MessageProvider} from '../../provider/message.provider'
 
 @Component({
     selector: 'app-messages',
@@ -7,8 +9,17 @@ import {Component, OnInit} from '@angular/core'
 })
 export class MessagesComponent implements OnInit {
 
-    constructor() {}
+    messagePreviews: MessagePreview[]
 
-    ngOnInit(): void {}
+    constructor(
+        private messageProvider: MessageProvider
+    ) {}
+
+    ngOnInit(): void {
+        this.messageProvider.messagePreviews.observable
+            .subscribe(previews => {
+                this.messagePreviews = previews
+            })
+    }
 
 }

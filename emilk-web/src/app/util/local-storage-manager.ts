@@ -1,13 +1,9 @@
-import {Injectable} from '@angular/core'
+export class LocalStorageManager {
 
-@Injectable({
-    providedIn: 'root'
-})
-export class ActiveAccountService {
+    name: string
 
-    name: string = 'activeAccount'
-
-    constructor() {
+    constructor(name: string) {
+        this.name = name
     }
 
     get(): string | null {

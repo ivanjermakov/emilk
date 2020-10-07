@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core'
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core'
 import {Boxes, Folder} from '../../model/Boxes'
 
 @Component({
@@ -10,6 +10,9 @@ export class BoxComponent implements OnInit, OnChanges {
 
     @Input()
     boxes: Boxes
+
+    @Output()
+    onBoxSelect: EventEmitter<string> = new EventEmitter<string>()
 
     entries: [string, Folder][]
 

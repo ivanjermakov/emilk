@@ -25,6 +25,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome'
 import {ExpandIconComponent} from './component/expand-icon/expand-icon.component'
 import {MessagesComponent} from './component/messages/messages.component'
+import {MessagePreviewComponent} from './component/message-preview/message-preview.component'
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import {MessagesComponent} from './component/messages/messages.component'
         AccountActionComponent,
         MessagesBoxesSwitcherComponent,
         ExpandIconComponent,
-        MessagesComponent
+        MessagesComponent,
+        MessagePreviewComponent
     ],
     imports: [
         BrowserModule,

@@ -1,5 +1,6 @@
-<div class='heading' (click)='toggleExpand()'>
+<div class='heading' (click)='toggleClickOrExpand()'>
     <fa-icon [class.rotated]='expanded' [icon]='faCaretRight' *ngIf='isFolder'></fa-icon>
     <p>{{name}}</p>
 </div>
-<app-box *ngIf='expanded' [boxes]='folder.children' [@slideFromLeft]></app-box>
+<app-box *ngIf='expanded' [boxes]='folder.children' [@slideFromLeft]
+         (onBoxSelect)='onBoxSelect.emit(name + "/" + $event)'></app-box>

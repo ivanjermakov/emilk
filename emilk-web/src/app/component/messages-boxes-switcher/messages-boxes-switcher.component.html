@@ -3,5 +3,5 @@
     <fa-icon [icon]='faCircle'></fa-icon>
     <p (click)='messagesActive = false' [class.active]='!messagesActive'>mailboxes</p>
 </div>
-<app-boxes *ngIf='!messagesActive'></app-boxes>
+<app-boxes *ngIf='!messagesActive' (onBoxSelect)='messagesActive = true'></app-boxes>
 <app-messages *ngIf='messagesActive'></app-messages>

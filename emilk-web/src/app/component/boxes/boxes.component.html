@@ -1,1 +1,1 @@
-<app-box *ngIf='boxes' [boxes]='boxes'></app-box>
+<app-box *ngIf='boxes' [boxes]='boxes' (onBoxSelect)='onBoxSelect.emit($event)'></app-box>

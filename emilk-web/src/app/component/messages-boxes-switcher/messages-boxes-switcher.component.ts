@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, Input, OnInit} from '@angular/core'
 import {faCircle} from '@fortawesome/free-solid-svg-icons'
 
 @Component({
@@ -8,6 +8,7 @@ import {faCircle} from '@fortawesome/free-solid-svg-icons'
 })
 export class MessagesBoxesSwitcherComponent implements OnInit {
 
+    @Input()
     messagesActive: boolean = true
 
     faCircle = faCircle

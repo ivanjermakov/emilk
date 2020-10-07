@@ -1,1 +1,2 @@
-<app-folder *ngFor='let box of entries' [name]='box[0]' [folder]='box[1]'></app-folder>
+<app-folder *ngFor='let box of entries' [name]='box[0]' [folder]='box[1]'
+            (onBoxSelect)='onBoxSelect.emit($event)'></app-folder>
