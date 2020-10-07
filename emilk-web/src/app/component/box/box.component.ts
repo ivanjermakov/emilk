@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core'
+import {Component, Input, OnChanges, OnInit} from '@angular/core'
 import {Boxes, Folder} from '../../model/Boxes'
 
 @Component({
@@ -6,7 +6,7 @@ import {Boxes, Folder} from '../../model/Boxes'
     templateUrl: './box.component.html',
     styleUrls: ['./box.component.sass']
 })
-export class BoxComponent implements OnInit {
+export class BoxComponent implements OnInit, OnChanges {
 
     @Input()
     boxes: Boxes
@@ -15,7 +15,9 @@ export class BoxComponent implements OnInit {
 
     constructor() {}
 
-    ngOnInit(): void {
+    ngOnInit(): void {}
+
+    ngOnChanges() {
         this.entries = Object.entries(this.boxes)
     }
 
