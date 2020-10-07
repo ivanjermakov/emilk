@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core'
 import {Account} from '../../model/Account'
+import {faCheck, faUser} from '@fortawesome/free-solid-svg-icons'
 
 @Component({
     selector: 'app-account',
@@ -16,6 +17,9 @@ export class AccountComponent implements OnInit {
 
     @Input()
     expanded: boolean = false
+
+    faUser = faUser
+    faCheck = faCheck
 
     constructor() {}
 

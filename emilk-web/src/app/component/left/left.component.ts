@@ -3,11 +3,15 @@ import {Account} from '../../model/Account'
 import {AccountsProvider} from '../../provider/accounts.provider'
 import {ActiveAccountService} from '../../service/active-account.service'
 import {filter} from 'rxjs/operators'
+import {fadeInOutAnimation} from '../../util/animation'
 
 @Component({
     selector: 'app-left',
     templateUrl: './left.component.html',
-    styleUrls: ['./left.component.sass']
+    styleUrls: ['./left.component.sass'],
+    animations: [
+        fadeInOutAnimation
+    ]
 })
 export class LeftComponent implements OnInit {
 

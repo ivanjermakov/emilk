@@ -8,7 +8,6 @@ import {MailComponent} from './component/mail/mail.component'
 import {AppComponent} from './component/app/app.component'
 import {FormsModule} from '@angular/forms'
 import {HttpClientModule} from '@angular/common/http'
-import {PreviewsComponent} from './component/previews/previews.component'
 import {MessageComponent} from './component/message/message.component'
 import {AccountComponent} from './component/account/account.component'
 import {ClickOutsideModule} from 'ng-click-outside'
@@ -21,7 +20,11 @@ import {DelimiterComponent} from './component/delimiter/delimiter.component'
 import {AccountsPopupComponent} from './component/accounts-popup/accounts-popup.component'
 import {AccountActionsComponent} from './component/account-actions/account-actions.component'
 import {AccountActionComponent} from './component/account-action/account-action.component'
-import {PreviewsBoxesSwitcherComponent} from './component/previews-boxes-switcher/previews-boxes-switcher.component'
+import {MessagesBoxesSwitcherComponent} from './component/messages-boxes-switcher/messages-boxes-switcher.component'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome'
+import {ExpandIconComponent} from './component/expand-icon/expand-icon.component'
+import {MessagesComponent} from './component/messages/messages.component'
 
 @NgModule({
     declarations: [
@@ -29,7 +32,6 @@ import {PreviewsBoxesSwitcherComponent} from './component/previews-boxes-switche
         LogInComponent,
         RegisterComponent,
         MailComponent,
-        PreviewsComponent,
         MessageComponent,
         AccountComponent,
         BoxComponent,
@@ -41,14 +43,18 @@ import {PreviewsBoxesSwitcherComponent} from './component/previews-boxes-switche
         AccountsPopupComponent,
         AccountActionsComponent,
         AccountActionComponent,
-        PreviewsBoxesSwitcherComponent
+        MessagesBoxesSwitcherComponent,
+        ExpandIconComponent,
+        MessagesComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         FormsModule,
         HttpClientModule,
-        ClickOutsideModule
+        ClickOutsideModule,
+        BrowserAnimationsModule,
+        FontAwesomeModule
     ],
     providers: [],
     bootstrap: [AppComponent]

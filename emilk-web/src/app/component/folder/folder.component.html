@@ -1,2 +1,5 @@
-<p>{{name}}</p>
-<app-box [boxes]='folder.children'></app-box>
+<div class='heading' (click)='toggleExpand()'>
+    <fa-icon [class.rotated]='expanded' [icon]='faCaretRight' *ngIf='isFolder'></fa-icon>
+    <p>{{name}}</p>
+</div>
+<app-box *ngIf='expanded' [boxes]='folder.children' [@slideFromLeft]></app-box>

@@ -8,7 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 export class AccountActionComponent implements OnInit {
 
     @Input()
-    iconClass: string
+    icon: any
 
     @Input()
     text: string
