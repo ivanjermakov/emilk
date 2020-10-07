@@ -12,25 +12,25 @@ import {AccountsProvider} from '../../provider/accounts.provider'
 export class MailComponent implements OnInit {
 
   constructor(
-    private tokenProvider: TokenProvider,
-    private accountProvider: AccountsProvider,
-    private accountService: AccountService
+      private tokenProvider: TokenProvider,
+      private accountProvider: AccountsProvider,
+      private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
     this.tokenProvider.token.observable
-      .pipe(
-        filter(t => !!t),
-        first()
-      )
-      .subscribe(() => {
-        this.fetchAccounts()
-      })
+        .pipe(
+            filter(t => !!t),
+            first()
+        )
+        .subscribe(() => {
+          this.fetchAccounts()
+        })
   }
 
   private fetchAccounts() {
     this.accountService.all().subscribe(accounts =>
-      this.accountProvider.accounts.set(accounts)
+        this.accountProvider.accounts.set(accounts)
     )
   }
 

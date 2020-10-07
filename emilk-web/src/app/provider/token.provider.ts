@@ -10,7 +10,7 @@ export class TokenProvider {
   token: ObservableData<string> = new ObservableData<string>()
 
   constructor(
-    private tokenService: TokenService
+      private tokenService: TokenService
   ) {
     this.token.set(this.tokenService.get() || '')
   }

@@ -3,7 +3,7 @@ import {ObservableData} from '../util/observable-data'
 import {Account} from '../model/Account'
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AccountsProvider {
 

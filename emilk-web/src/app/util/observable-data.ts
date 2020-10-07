@@ -39,10 +39,10 @@ export class ObservableData<T> {
    */
   update(): void {
     this.observable
-      .pipe(first())
-      .subscribe(value => {
-        this.subject.next(value)
-      })
+        .pipe(first())
+        .subscribe(value => {
+          this.subject.next(value)
+        })
   }
 
 }

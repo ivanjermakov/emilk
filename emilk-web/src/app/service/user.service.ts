@@ -9,29 +9,29 @@ import {TokenProvider} from '../provider/token.provider'
 import {Router} from '@angular/router'
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
 
-  url: string = `${environment.apiUrl}/user`
+    url: string = `${environment.apiUrl}/user`
 
-  constructor(
-    private http: HttpClient,
-    private tokenProvider: TokenProvider,
-    private router: Router
-  ) {}
+    constructor(
+        private http: HttpClient,
+        private tokenProvider: TokenProvider,
+        private router: Router
+    ) {}
 
-  register(registerUserDto: RegisterUser): Observable<void> {
-    return this.http.post<void>(`${this.url}/register`, registerUserDto)
-  }
+    register(registerUserDto: RegisterUser): Observable<void> {
+        return this.http.post<void>(`${this.url}/register`, registerUserDto)
+    }
 
-  logIn(logInUserDto: LogInUser): Observable<Token> {
-    return this.http.post<Token>(`${this.url}/log-in`, logInUserDto)
-  }
+    logIn(logInUserDto: LogInUser): Observable<Token> {
+        return this.http.post<Token>(`${this.url}/log-in`, logInUserDto)
+    }
 
-  logOut(): void {
-    this.tokenProvider.setToken('')
-    this.router.navigate(['/log-in'])
-  }
+    logOut(): void {
+        this.tokenProvider.setToken('')
+        this.router.navigate(['/log-in'])
+    }
 
 }

@@ -14,23 +14,23 @@ export class LogInComponent implements OnInit {
   password: string
 
   constructor(
-    private userService: UserService,
-    private tokenProvider: TokenProvider,
-    private router: Router
+      private userService: UserService,
+      private tokenProvider: TokenProvider,
+      private router: Router
   ) {}
 
   ngOnInit(): void {}
 
   logIn() {
     this.userService
-      .logIn({
-        email: this.email,
-        password: this.password
-      })
-      .subscribe(token => {
-        this.tokenProvider.setToken(token.value)
-        this.router.navigate(['/mail'])
-      })
+        .logIn({
+          email: this.email,
+          password: this.password
+        })
+        .subscribe(token => {
+          this.tokenProvider.setToken(token.value)
+          this.router.navigate(['/mail'])
+        })
   }
 
 }
