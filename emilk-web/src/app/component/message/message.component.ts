@@ -13,7 +13,7 @@ export class MessageComponent implements OnInit {
 
     constructor(
         private messageProvider: MessageProvider
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.messageProvider.currentMessage.observable

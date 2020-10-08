@@ -35,7 +35,6 @@ export class MessageService {
 
     private parseHeader(message: Message): MessagePreviewDto {
         const header = _.find(message.parts, {'which': this.headerSelector})!.body
-        console.log(header)
         return {
             uid: message.attributes.uid,
             from: header.from[0],

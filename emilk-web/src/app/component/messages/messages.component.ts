@@ -30,27 +30,9 @@ export class MessagesComponent implements OnInit {
             })
     }
 
-    fetchMore() {
-        const pageSize = environment.pageSize
-        const pagesFetched = this.messagePreviews.length / pageSize
-        this.accountProvider.currentAccount.observable
-            .pipe(
-                filter(a => !!a),
-                first(),
-                map(a => a.user)
-            )
-            .subscribe(email =>
-                this.messageService
-                    .getPage(email, pagesFetched, pageSize)
-                    .subscribe(previews => {
-                        this.messageProvider.messagePreviews.set([...this.messagePreviews, ...previews.reverse()])
-                    })
-            )
-
-
-    }
-
     openMessage(preview: MessagePreview) {
+        this.messageProvider.currentMessage.set(null)
+
         this.accountProvider.currentAccount.observable
             .pipe(
                 filter(a => !!a),
@@ -68,6 +50,24 @@ export class MessagesComponent implements OnInit {
                         this.messageService.getMessage(email, boxName, preview.uid)
                             .subscribe(message => this.messageProvider.currentMessage.set(message))
                     )
+            )
+    }
+
+    fetchMore() {
+        const pageSize = environment.pageSize
+        const pagesFetched = this.messagePreviews.length / pageSize
+        this.accountProvider.currentAccount.observable
+            .pipe(
+                filter(a => !!a),
+                first(),
+                map(a => a.user)
+            )
+            .subscribe(email =>
+                this.messageService
+                    .getPage(email, pagesFetched, pageSize)
+                    .subscribe(previews => {
+                        this.messageProvider.messagePreviews.set([...this.messagePreviews, ...previews.reverse()])
+                    })
             )
     }
 }
