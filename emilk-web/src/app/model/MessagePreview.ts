@@ -2,6 +2,6 @@ export interface MessagePreview {
     uid: number
     from: string
     to: string[]
-    date: Date
+    date: string
     subject: string
 }

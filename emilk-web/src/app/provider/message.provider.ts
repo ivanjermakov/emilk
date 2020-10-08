@@ -6,6 +6,7 @@ import {BoxProvider} from './box.provider'
 import {filter, first, map} from 'rxjs/operators'
 import {MessageService} from '../service/message.service'
 import {AccountProvider} from './account.provider'
+import {environment} from '../../environments/environment'
 
 @Injectable({
     providedIn: 'root'
@@ -34,8 +35,8 @@ export class MessageProvider {
                     )
                     .subscribe(email =>
                         this.messageService
-                            .search(email, box, ['1:20'])
-                            .subscribe(previews => this.messagePreviews.set(previews))
+                            .getPage(email, 0, environment.initFetchSize)
+                            .subscribe(previews => this.messagePreviews.set(previews.reverse()))
                     )
             })
     }

@@ -3,6 +3,7 @@
 @import 'src/app/style/animation'
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap')
 
 html, body, app-root
   width: 100%
@@ -18,7 +19,7 @@ body
 *
   box-sizing: border-box
 
-  font-family: 'Quicksand', 'Helvetica', sans-serif
+  font-family: 'Quicksand', 'Raleway', 'Helvetica', sans-serif
   font-size: $font-size
 
   margin: 0
@@ -51,3 +52,19 @@ a
   text-decoration: underline
   font-size: $font-size-smaller
   color: $dark
+
+//scrollbars
+
+::-webkit-scrollbar
+  width: 6px
+
+::-webkit-scrollbar-track
+  background: transparent
+
+::-webkit-scrollbar-thumb
+  background: $dark
+  border-radius: 2px
+
+*
+  scrollbar-width: thin
+  scrollbar-color: $dark transparent

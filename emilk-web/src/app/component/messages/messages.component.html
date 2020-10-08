@@ -1,4 +1,4 @@
-<div class='messages-container' *ngIf='messagePreviews'>
+<div class='messages-container' *ngIf='messagePreviews' appScrollToBottom (onBottom)='fetchMore()'>
     <app-message-preview *ngFor='let preview of messagePreviews' [messagePreview]='preview'>
     </app-message-preview>
 </div>

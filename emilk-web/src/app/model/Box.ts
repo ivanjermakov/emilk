@@ -1,4 +1,4 @@
-export interface BoxMessagesDto {
+export interface BoxMessages {
     total: number
     new: number
     unseen: number
@@ -7,5 +7,5 @@ export interface BoxMessagesDto {
 export interface Box {
     name: string
     readonly?: boolean
-    messages: BoxMessagesDto
+    messages: BoxMessages
 }

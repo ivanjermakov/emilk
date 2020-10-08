@@ -26,6 +26,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome'
 import {ExpandIconComponent} from './component/expand-icon/expand-icon.component'
 import {MessagesComponent} from './component/messages/messages.component'
 import {MessagePreviewComponent} from './component/message-preview/message-preview.component'
+import {ScrollToBottomDirective} from './directive/scroll-to-bottom.directive'
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import {MessagePreviewComponent} from './component/message-preview/message-previ
         MessagesBoxesSwitcherComponent,
         ExpandIconComponent,
         MessagesComponent,
-        MessagePreviewComponent
+        MessagePreviewComponent,
+        ScrollToBottomDirective
     ],
     imports: [
         BrowserModule,

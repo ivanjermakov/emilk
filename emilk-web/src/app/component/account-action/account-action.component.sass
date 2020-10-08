@@ -1,3 +1,4 @@
+@import 'src/app/style/constant'
 @import 'src/app/style/color'
 
 .action
@@ -8,11 +9,14 @@
 
   cursor: pointer
 
+  &:hover
+    background: $light
+
   fa-icon
     width: 20px
 
     margin-right: 20px
     color: $dark
 
-  &:hover
-    background: $light
+  p
+    font-size: $font-size-smaller

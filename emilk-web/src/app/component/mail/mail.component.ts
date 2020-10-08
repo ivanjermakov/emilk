@@ -29,9 +29,9 @@ export class MailComponent implements OnInit {
     }
 
     private fetchAccounts() {
-        this.accountService.all().subscribe(accounts =>
+        this.accountService.all().subscribe(accounts => {
             this.accountProvider.accounts.set(accounts)
-        )
+        })
     }
 
 }

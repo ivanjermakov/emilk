@@ -22,7 +22,9 @@ export class AccountProvider {
                 if (activeAccount) {
                     this.currentAccount.set(activeAccount)
                 } else {
-                    this.currentAccount.set(this.accounts[0])
+                    const firstAccount: Account = accounts[0]
+                    this.currentAccountManager.set(firstAccount.user)
+                    this.currentAccount.set(firstAccount)
                 }
             })
     }

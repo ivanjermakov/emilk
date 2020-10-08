@@ -3,5 +3,7 @@
     <fa-icon [icon]='faCircle'></fa-icon>
     <p (click)='messagesActive = false' [class.active]='!messagesActive'>mailboxes</p>
 </div>
-<app-boxes *ngIf='!messagesActive' (onBoxSelect)='messagesActive = true'></app-boxes>
-<app-messages *ngIf='messagesActive'></app-messages>
+<div class='container'>
+    <app-boxes *ngIf='!messagesActive' [@fadeInOut]></app-boxes>
+    <app-messages *ngIf='messagesActive' [@fadeInOut]></app-messages>
+</div>

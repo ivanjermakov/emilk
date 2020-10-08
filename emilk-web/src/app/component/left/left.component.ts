@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core'
 import {Account} from '../../model/Account'
 import {AccountProvider} from '../../provider/account.provider'
-import {fadeInOutAnimation} from '../../util/animation'
+import {fadeInOutZoomAnimation} from '../../util/animation'
 import {filter} from 'rxjs/operators'
 
 @Component({
@@ -9,7 +9,7 @@ import {filter} from 'rxjs/operators'
     templateUrl: './left.component.html',
     styleUrls: ['./left.component.sass'],
     animations: [
-        fadeInOutAnimation
+        fadeInOutZoomAnimation
     ]
 })
 export class LeftComponent implements OnInit {
@@ -29,9 +29,12 @@ export class LeftComponent implements OnInit {
             .pipe(filter(a => !!a))
             .subscribe(accounts => this.accounts = accounts)
 
+
         this.accountProvider.currentAccount.observable
             .pipe(filter(a => !!a))
-            .subscribe(current => this.currentAccount = current)
+            .subscribe(current => {
+                return this.currentAccount = current
+            })
     }
 
     setActive(account: Account) {

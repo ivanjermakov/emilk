@@ -4,6 +4,7 @@
 \:host
   display: flex
   flex-direction: column
+  height: 100%
 
   .switcher
     display: flex
@@ -27,3 +28,12 @@
 
     .active
       color: $black
+
+  .container
+    position: relative
+    height: 100%
+
+    app-messages, app-boxes
+      position: absolute
+      width: 100%
+      height: 100%

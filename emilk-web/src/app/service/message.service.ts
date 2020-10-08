@@ -4,9 +4,10 @@ import {Observable} from 'rxjs'
 import {MessagePreview} from '../model/MessagePreview'
 import {Message} from '../model/Message'
 import {environment} from '../../environments/environment'
-import {first, mergeMap} from 'rxjs/operators'
+import {filter, first, mergeMap} from 'rxjs/operators'
 import {generateHttpOptionsWithTokenHeader} from '../util/generate-http-options-with-token-header'
 import {TokenProvider} from '../provider/token.provider'
+import {BoxProvider} from '../provider/box.provider'
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,8 @@ export class MessageService {
 
     constructor(
         private http: HttpClient,
-        private tokenProvider: TokenProvider
+        private tokenProvider: TokenProvider,
+        private boxProvider: BoxProvider
     ) {}
 
     search(accountEmail: string, boxName: string, searchCriteria: any[]): Observable<MessagePreview[]> {
@@ -43,6 +45,22 @@ export class MessageService {
                         ...generateHttpOptionsWithTokenHeader(token)
                     })
                 )
+            )
+    }
+
+    getPage(accountEmail: string, page: number, size: number): Observable<MessagePreview[]> {
+        return this.boxProvider.currentBox.observable
+            .pipe(
+                filter(b => !!b),
+                first(),
+                mergeMap(box => {
+                    const boxSize = box.messages.total
+                    const startFrom = page * size
+                    const startTo = startFrom + size
+                    const rangeTo = boxSize - startFrom
+                    const rangeFrom = Math.max(1, boxSize - startTo + 1)
+                    return this.search(accountEmail, box.name, [`${rangeFrom}:${rangeTo}`])
+                })
             )
     }
 
