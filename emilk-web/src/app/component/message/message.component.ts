@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core'
+import {MessageProvider} from '../../provider/message.provider'
+import {Message} from '../../model/Message'
 
 @Component({
     selector: 'app-message',
@@ -7,9 +9,15 @@ import {Component, OnInit} from '@angular/core'
 })
 export class MessageComponent implements OnInit {
 
-    constructor() { }
+    message: Message
+
+    constructor(
+        private messageProvider: MessageProvider
+    ) { }
 
     ngOnInit(): void {
+        this.messageProvider.currentMessage.observable
+            .subscribe(message => this.message = message)
     }
 
 }

@@ -27,6 +27,7 @@ import {ExpandIconComponent} from './component/expand-icon/expand-icon.component
 import {MessagesComponent} from './component/messages/messages.component'
 import {MessagePreviewComponent} from './component/message-preview/message-preview.component'
 import {ScrollToBottomDirective} from './directive/scroll-to-bottom.directive'
+import {NgDompurifyModule} from '@tinkoff/ng-dompurify'
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import {ScrollToBottomDirective} from './directive/scroll-to-bottom.directive'
         HttpClientModule,
         ClickOutsideModule,
         BrowserAnimationsModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        NgDompurifyModule
     ],
     providers: [],
     bootstrap: [AppComponent]

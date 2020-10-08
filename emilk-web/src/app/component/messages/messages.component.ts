@@ -5,6 +5,7 @@ import {MessageService} from '../../service/message.service'
 import {filter, first, map} from 'rxjs/operators'
 import {AccountProvider} from '../../provider/account.provider'
 import {environment} from '../../../environments/environment'
+import {BoxProvider} from '../../provider/box.provider'
 
 @Component({
     selector: 'app-messages',
@@ -17,8 +18,9 @@ export class MessagesComponent implements OnInit {
 
     constructor(
         private messageProvider: MessageProvider,
+        private accountProvider: AccountProvider,
+        private boxProvider: BoxProvider,
         private messageService: MessageService,
-        private accountProvider: AccountProvider
     ) {}
 
     ngOnInit(): void {
@@ -48,4 +50,24 @@ export class MessagesComponent implements OnInit {
 
     }
 
+    openMessage(preview: MessagePreview) {
+        this.accountProvider.currentAccount.observable
+            .pipe(
+                filter(a => !!a),
+                first(),
+                map(account => account.user)
+            )
+            .subscribe(email =>
+                this.boxProvider.currentBox.observable
+                    .pipe(
+                        filter(a => !!a),
+                        first(),
+                        map(box => box.name)
+                    )
+                    .subscribe(boxName =>
+                        this.messageService.getMessage(email, boxName, preview.uid)
+                            .subscribe(message => this.messageProvider.currentMessage.set(message))
+                    )
+            )
+    }
 }
