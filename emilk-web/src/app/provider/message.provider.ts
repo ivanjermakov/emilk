@@ -7,6 +7,9 @@ import {distinctUntilChanged, filter, first, map} from 'rxjs/operators'
 import {MessageService} from '../service/message.service'
 import {AccountProvider} from './account.provider'
 import {environment} from '../../environments/environment'
+import {StatusProvider} from './status.provider'
+import {Target} from '../model/Target'
+import {Event} from '../model/Event'
 
 @Injectable({
     providedIn: 'root'
@@ -19,13 +22,16 @@ export class MessageProvider {
     constructor(
         private messageService: MessageService,
         private accountProvider: AccountProvider,
-        private boxProvider: BoxProvider
+        private boxProvider: BoxProvider,
+        private statusProvider: StatusProvider
     ) {
         this.boxProvider.currentBox.observable
             .pipe(distinctUntilChanged())
             .subscribe(box => {
                 this.messagePreviews.set(null)
+                this.statusProvider.status.set({target: Target.MESSAGES, event: Event.LOADING})
                 this.currentMessage.set(null)
+                this.statusProvider.status.set({target: Target.CURRENT_MESSAGE, event: Event.NOT_LOADED})
                 if (!box) return
 
                 this.accountProvider.currentAccount.observable
@@ -37,7 +43,10 @@ export class MessageProvider {
                     .subscribe(email =>
                         this.messageService
                             .getPage(email, 0, environment.initFetchSize)
-                            .subscribe(previews => this.messagePreviews.set(previews.reverse()))
+                            .subscribe(previews => {
+                                this.messagePreviews.set(previews.reverse())
+                                this.statusProvider.status.set({target: Target.MESSAGES, event: Event.LOADED})
+                            })
                     )
             })
     }

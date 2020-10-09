@@ -6,6 +6,9 @@ import {filter, first, map} from 'rxjs/operators'
 import {AccountProvider} from '../../provider/account.provider'
 import {environment} from '../../../environments/environment'
 import {BoxProvider} from '../../provider/box.provider'
+import {StatusProvider} from '../../provider/status.provider'
+import {Target} from '../../model/Target'
+import {Event} from '../../model/Event'
 
 @Component({
     selector: 'app-messages',
@@ -21,6 +24,7 @@ export class MessagesComponent implements OnInit {
         private accountProvider: AccountProvider,
         private boxProvider: BoxProvider,
         private messageService: MessageService,
+        private statusProvider: StatusProvider
     ) {}
 
     ngOnInit(): void {
@@ -32,6 +36,7 @@ export class MessagesComponent implements OnInit {
 
     openMessage(preview: MessagePreview) {
         this.messageProvider.currentMessage.set(null)
+        this.statusProvider.status.set({target: Target.CURRENT_MESSAGE, event: Event.LOADING})
 
         this.accountProvider.currentAccount.observable
             .pipe(
@@ -48,12 +53,16 @@ export class MessagesComponent implements OnInit {
                     )
                     .subscribe(boxName =>
                         this.messageService.getMessage(email, boxName, preview.uid)
-                            .subscribe(message => this.messageProvider.currentMessage.set(message))
+                            .subscribe(message => {
+                                this.messageProvider.currentMessage.set(message)
+                                this.statusProvider.status.set({target: Target.CURRENT_MESSAGE, event: Event.LOADED})
+                            })
                     )
             )
     }
 
     fetchMore() {
+        this.statusProvider.status.set({target: Target.FETCH_MORE_MESSAGES, event: Event.LOADING})
         const pageSize = environment.pageSize
         const pagesFetched = this.messagePreviews.length / pageSize
         this.accountProvider.currentAccount.observable
@@ -67,6 +76,7 @@ export class MessagesComponent implements OnInit {
                     .getPage(email, pagesFetched, pageSize)
                     .subscribe(previews => {
                         this.messageProvider.messagePreviews.set([...this.messagePreviews, ...previews.reverse()])
+                        this.statusProvider.status.set({target: Target.FETCH_MORE_MESSAGES, event: Event.LOADED})
                     })
             )
     }

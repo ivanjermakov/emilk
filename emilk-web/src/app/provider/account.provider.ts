@@ -3,6 +3,9 @@ import {ObservableData} from '../util/observable-data'
 import {Account} from '../model/Account'
 import {filter} from 'rxjs/operators'
 import {LocalStorageManager} from '../util/local-storage-manager'
+import {StatusProvider} from './status.provider'
+import {Target} from '../model/Target'
+import {Event} from '../model/Event'
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +16,9 @@ export class AccountProvider {
     currentAccount: ObservableData<Account> = new ObservableData<Account>()
     currentAccountManager: LocalStorageManager = new LocalStorageManager('currentAccount')
 
-    constructor() {
+    constructor(
+        private statusProvider: StatusProvider
+    ) {
         this.accounts.observable
             .pipe(filter(a => !!a))
             .subscribe(accounts => {
@@ -32,6 +37,7 @@ export class AccountProvider {
     setCurrent(account: Account): void {
         this.currentAccountManager.set(account.user)
         this.currentAccount.set(account)
+        this.statusProvider.status.set({target: Target.CURRENT_ACCOUNT, event: Event.LOADED})
     }
 
 }
