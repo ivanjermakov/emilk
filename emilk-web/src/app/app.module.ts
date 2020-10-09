@@ -28,6 +28,8 @@ import {MessagesComponent} from './component/messages/messages.component'
 import {MessagePreviewComponent} from './component/message-preview/message-preview.component'
 import {ScrollToBottomDirective} from './directive/scroll-to-bottom.directive'
 import {NgDompurifyModule} from '@tinkoff/ng-dompurify'
+import {NoMessageComponent} from './component/no-message/no-message.component'
+import {MessageLoadingComponent} from './component/message-loading/message-loading.component'
 
 @NgModule({
     declarations: [
@@ -50,7 +52,9 @@ import {NgDompurifyModule} from '@tinkoff/ng-dompurify'
         ExpandIconComponent,
         MessagesComponent,
         MessagePreviewComponent,
-        ScrollToBottomDirective
+        ScrollToBottomDirective,
+        NoMessageComponent,
+        MessageLoadingComponent
     ],
     imports: [
         BrowserModule,

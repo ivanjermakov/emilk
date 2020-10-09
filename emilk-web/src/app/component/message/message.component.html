@@ -1,3 +1,5 @@
-<div class='message' *ngIf='message'>
+<div class='message' *ngIf='active'>
     <div class='content' [innerHTML]='message.body | dompurify'></div>
 </div>
+<app-no-message *ngIf='!active && !loading'></app-no-message>
+<app-message-loading *ngIf='loading'></app-message-loading>
