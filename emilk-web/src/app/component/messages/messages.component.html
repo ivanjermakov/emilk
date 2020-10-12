@@ -1,5 +1,9 @@
-<div class='messages-container' *ngIf='messagePreviews' appScrollToBottom (onBottom)='fetchMore()'>
-    <app-message-preview *ngFor='let preview of messagePreviews' [messagePreview]='preview'
-                         (click)='openMessage(preview)'>
-    </app-message-preview>
+<div class='messages'>
+    <div class='messages-container' *ngIf='!loading && !noBoxSelected' appScrollToBottom (onBottom)='fetchMore()'>
+        <app-message-preview *ngFor='let preview of messagePreviews' [messagePreview]='preview'
+                             (click)='openMessage(preview)'>
+        </app-message-preview>
+    </div>
+    <app-loading *ngIf='loading'>loading</app-loading>
+    <p *ngIf='noBoxSelected'>No box selected</p>
 </div>

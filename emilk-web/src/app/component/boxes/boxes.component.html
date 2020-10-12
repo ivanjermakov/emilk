@@ -1,1 +1,3 @@
-<app-box *ngIf='boxes' [boxes]='boxes' (onBoxSelect)='onBoxSelect.emit($event)'></app-box>
+<app-box *ngIf='lastEvent === "LOADED" && boxes' [boxes]='boxes' (onBoxSelect)='onBoxSelect.emit($event)'></app-box>
+<app-loading *ngIf='lastEvent === "LOADING"'></app-loading>
+<p *ngIf='lastEvent === "NOT_LOADED"'>No boxes</p>

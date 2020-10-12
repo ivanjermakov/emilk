@@ -29,7 +29,9 @@ import {MessagePreviewComponent} from './component/message-preview/message-previ
 import {ScrollToBottomDirective} from './directive/scroll-to-bottom.directive'
 import {NgDompurifyModule} from '@tinkoff/ng-dompurify'
 import {NoMessageComponent} from './component/no-message/no-message.component'
-import {MessageLoadingComponent} from './component/message-loading/message-loading.component'
+import {LoadingComponent} from './component/loading/loading.component'
+import {ToastrModule} from 'ngx-toastr'
+import {toastrConfig} from './config/toastr.config'
 
 @NgModule({
     declarations: [
@@ -54,7 +56,7 @@ import {MessageLoadingComponent} from './component/message-loading/message-loadi
         MessagePreviewComponent,
         ScrollToBottomDirective,
         NoMessageComponent,
-        MessageLoadingComponent
+        LoadingComponent
     ],
     imports: [
         BrowserModule,
@@ -64,7 +66,8 @@ import {MessageLoadingComponent} from './component/message-loading/message-loadi
         ClickOutsideModule,
         BrowserAnimationsModule,
         FontAwesomeModule,
-        NgDompurifyModule
+        NgDompurifyModule,
+        ToastrModule.forRoot(toastrConfig)
     ],
     providers: [],
     bootstrap: [AppComponent]

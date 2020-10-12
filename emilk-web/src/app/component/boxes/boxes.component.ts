@@ -4,6 +4,9 @@ import {BoxProvider} from '../../provider/box.provider'
 import {BoxService} from '../../service/box.service'
 import {AccountProvider} from '../../provider/account.provider'
 import {filter, first, map} from 'rxjs/operators'
+import {StatusProvider} from '../../provider/status.provider'
+import {Target} from '../../model/Target'
+import {Event} from '../../model/Event'
 
 @Component({
     selector: 'app-boxes',
@@ -16,11 +19,13 @@ export class BoxesComponent implements OnInit {
     onBoxSelect: EventEmitter<string> = new EventEmitter<string>()
 
     boxes: Boxes
+    lastEvent: Event = Event.NOT_LOADED
 
     constructor(
         private boxProvider: BoxProvider,
         private accountProvider: AccountProvider,
-        private boxService: BoxService
+        private boxService: BoxService,
+        private statusProvider: StatusProvider
     ) {}
 
     ngOnInit(): void {
@@ -29,6 +34,7 @@ export class BoxesComponent implements OnInit {
 
         this.onBoxSelect
             .subscribe(boxName => {
+                this.statusProvider.status.set({target: Target.BOXES, event: Event.LOADING})
                 this.boxProvider.currentBox.observable
                     .pipe(first())
                     .subscribe(currentBox => {
@@ -42,10 +48,20 @@ export class BoxesComponent implements OnInit {
                             )
                             .subscribe(email =>
                                 this.boxService.getBox(email, boxName)
-                                    .subscribe(box => this.boxProvider.setCurrent(email, box))
+                                    .subscribe(box => {
+                                        this.boxProvider.setCurrent(email, box)
+                                        this.statusProvider.status.set({target: Target.BOXES, event: Event.LOADED})
+                                    })
                             )
                     })
             })
+
+        this.statusProvider.status.observable
+            .pipe(
+                filter(s => s.target === Target.BOXES),
+                map(s => s.event)
+            )
+            .subscribe(event => this.lastEvent = event)
     }
 
 }

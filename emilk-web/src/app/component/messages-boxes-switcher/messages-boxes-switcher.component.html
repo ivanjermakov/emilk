@@ -4,6 +4,6 @@
     <p (click)='messagesActive = false' [class.active]='!messagesActive'>mailboxes</p>
 </div>
 <div class='container'>
-    <app-boxes *ngIf='!messagesActive' [@fadeInOut]></app-boxes>
-    <app-messages *ngIf='messagesActive' [@fadeInOut]></app-messages>
+    <app-boxes [class.hidden]='messagesActive'></app-boxes>
+    <app-messages [class.hidden]='!messagesActive'></app-messages>
 </div>

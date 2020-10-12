@@ -1,8 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core'
 import {faCircle} from '@fortawesome/free-solid-svg-icons'
-import {filter} from 'rxjs/operators'
-import {MessageProvider} from '../../provider/message.provider'
 import {fadeInOutAnimation} from '../../util/animation'
+import {StatusProvider} from '../../provider/status.provider'
+import {filter} from 'rxjs/operators'
+import {Target} from '../../model/Target'
+import {Event} from '../../model/Event'
 
 @Component({
     selector: 'app-messages-boxes-switcher',
@@ -20,15 +22,16 @@ export class MessagesBoxesSwitcherComponent implements OnInit {
     faCircle = faCircle
 
     constructor(
-        private messageProvider: MessageProvider
+        private statusProvider: StatusProvider
     ) {}
 
     ngOnInit(): void {
-        this.messageProvider.messagePreviews.observable
-            .pipe(filter(b => !!b))
-            .subscribe(() => {
-                this.messagesActive = true
-            })
+        this.statusProvider.status.observable
+            .pipe(
+                filter(s => s.target === Target.MESSAGES),
+                filter(s => [Event.LOADING, Event.LOADED].includes(s.event))
+            )
+            .subscribe(() => this.messagesActive = true)
     }
 
 }

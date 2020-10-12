@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core'
 import {faSpinner} from '@fortawesome/free-solid-svg-icons'
 
 @Component({
-    selector: 'app-message-loading',
-    templateUrl: './message-loading.component.html',
-    styleUrls: ['./message-loading.component.sass']
+    selector: 'app-loading',
+    templateUrl: './loading.component.html',
+    styleUrls: ['./loading.component.sass']
 })
-export class MessageLoadingComponent implements OnInit {
+export class LoadingComponent implements OnInit {
 
     faSpinner = faSpinner
 

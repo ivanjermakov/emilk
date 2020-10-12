@@ -2,4 +2,4 @@
     <div class='content' [innerHTML]='message.body | dompurify'></div>
 </div>
 <app-no-message *ngIf='!active && !loading'></app-no-message>
-<app-message-loading *ngIf='loading'></app-message-loading>
+<app-loading *ngIf='loading'></app-loading>

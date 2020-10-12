@@ -18,6 +18,8 @@ import {Event} from '../../model/Event'
 export class MessagesComponent implements OnInit {
 
     messagePreviews: MessagePreview[]
+    loading: boolean = true
+    noBoxSelected: boolean = true
 
     constructor(
         private messageProvider: MessageProvider,
@@ -29,9 +31,29 @@ export class MessagesComponent implements OnInit {
 
     ngOnInit(): void {
         this.messageProvider.messagePreviews.observable
-            .subscribe(previews => {
-                this.messagePreviews = previews
+            .subscribe(previews => this.messagePreviews = previews)
+
+        this.statusProvider.currentStatusMap.observable
+            .pipe(
+                map(map => map.get(Target.MESSAGES))
+            )
+            .subscribe(event => {
+                switch (event) {
+                    case Event.NOT_LOADED:
+                        this.noBoxSelected = true
+                        this.loading = false
+                        break
+                    case Event.LOADED:
+                        this.noBoxSelected = false
+                        this.loading = false
+                        break
+                    case Event.LOADING:
+                        this.noBoxSelected = false
+                        this.loading = true
+                        break
+                }
             })
+
     }
 
     openMessage(preview: MessagePreview) {
