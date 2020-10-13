@@ -54,6 +54,10 @@ export class MessagesComponent implements OnInit {
                         break
                 }
             })
+
+        this.messageProvider.currentMessage.observable
+            .pipe(filter(s => !s))
+            .subscribe(() => this.currentMessageUid = null)
     }
 
     openMessage(preview: MessagePreview) {
