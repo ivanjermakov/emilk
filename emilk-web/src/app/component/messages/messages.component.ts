@@ -20,6 +20,7 @@ export class MessagesComponent implements OnInit {
     messagePreviews: MessagePreview[]
     loading: boolean = true
     noBoxSelected: boolean = true
+    currentMessageUid: number
 
     constructor(
         private messageProvider: MessageProvider,
@@ -53,7 +54,6 @@ export class MessagesComponent implements OnInit {
                         break
                 }
             })
-
     }
 
     openMessage(preview: MessagePreview) {
@@ -64,6 +64,7 @@ export class MessagesComponent implements OnInit {
 
                 this.messageProvider.currentMessage.set(null)
                 this.statusProvider.status.set({target: Target.CURRENT_MESSAGE, event: Event.LOADING})
+                this.currentMessageUid = preview.uid
 
                 this.accountProvider.currentAccount.observable
                     .pipe(
