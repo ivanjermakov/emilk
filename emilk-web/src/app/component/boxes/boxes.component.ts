@@ -38,7 +38,11 @@ export class BoxesComponent implements OnInit {
                 this.boxProvider.currentBox.observable
                     .pipe(first())
                     .subscribe(currentBox => {
-                        if (boxName === currentBox.name) return
+                        if (boxName === currentBox.name) {
+                            this.boxProvider.currentBox.update()
+                            this.statusProvider.status.set({target: Target.BOXES, event: Event.LOADED})
+                            return
+                        }
 
                         this.accountProvider.currentAccount.observable
                             .pipe(

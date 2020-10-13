@@ -57,30 +57,39 @@ export class MessagesComponent implements OnInit {
     }
 
     openMessage(preview: MessagePreview) {
-        this.messageProvider.currentMessage.set(null)
-        this.statusProvider.status.set({target: Target.CURRENT_MESSAGE, event: Event.LOADING})
+        this.messageProvider.currentMessage.observable
+            .pipe(first())
+            .subscribe(currentMessage => {
+                if (currentMessage && preview.uid === currentMessage.uid) return
 
-        this.accountProvider.currentAccount.observable
-            .pipe(
-                filter(a => !!a),
-                first(),
-                map(account => account.user)
-            )
-            .subscribe(email =>
-                this.boxProvider.currentBox.observable
+                this.messageProvider.currentMessage.set(null)
+                this.statusProvider.status.set({target: Target.CURRENT_MESSAGE, event: Event.LOADING})
+
+                this.accountProvider.currentAccount.observable
                     .pipe(
                         filter(a => !!a),
                         first(),
-                        map(box => box.name)
+                        map(account => account.user)
                     )
-                    .subscribe(boxName =>
-                        this.messageService.getMessage(email, boxName, preview.uid)
-                            .subscribe(message => {
-                                this.messageProvider.currentMessage.set(message)
-                                this.statusProvider.status.set({target: Target.CURRENT_MESSAGE, event: Event.LOADED})
-                            })
+                    .subscribe(email =>
+                        this.boxProvider.currentBox.observable
+                            .pipe(
+                                filter(a => !!a),
+                                first(),
+                                map(box => box.name)
+                            )
+                            .subscribe(boxName =>
+                                this.messageService.getMessage(email, boxName, preview.uid)
+                                    .subscribe(message => {
+                                        this.messageProvider.currentMessage.set(message)
+                                        this.statusProvider.status.set({
+                                            target: Target.CURRENT_MESSAGE,
+                                            event: Event.LOADED
+                                        })
+                                    })
+                            )
                     )
-            )
+            })
     }
 
     fetchMore() {

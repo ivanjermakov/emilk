@@ -3,7 +3,7 @@ import {ObservableData} from '../util/observable-data'
 import {Message} from '../model/Message'
 import {MessagePreview} from '../model/MessagePreview'
 import {BoxProvider} from './box.provider'
-import {distinctUntilChanged, filter, first, map} from 'rxjs/operators'
+import {filter, first, map} from 'rxjs/operators'
 import {MessageService} from '../service/message.service'
 import {AccountProvider} from './account.provider'
 import {environment} from '../../environments/environment'
@@ -26,7 +26,6 @@ export class MessageProvider {
         private statusProvider: StatusProvider
     ) {
         this.boxProvider.currentBox.observable
-            .pipe(distinctUntilChanged())
             .subscribe(box => {
                 this.messagePreviews.set(null)
                 this.statusProvider.status.set({target: Target.MESSAGES, event: Event.LOADING})
