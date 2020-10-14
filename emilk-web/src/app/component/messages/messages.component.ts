@@ -9,6 +9,7 @@ import {BoxProvider} from '../../provider/box.provider'
 import {StatusProvider} from '../../provider/status.provider'
 import {Target} from '../../model/Target'
 import {Event} from '../../model/Event'
+import {Message} from '../../model/Message'
 
 @Component({
     selector: 'app-messages',
@@ -83,16 +84,28 @@ export class MessagesComponent implements OnInit {
                                 first(),
                                 map(box => box.name)
                             )
-                            .subscribe(boxName =>
-                                this.messageService.getMessage(email, boxName, preview.uid)
-                                    .subscribe(message => {
-                                        this.messageProvider.currentMessage.set(message)
-                                        this.statusProvider.status.set({
-                                            target: Target.CURRENT_MESSAGE,
-                                            event: Event.LOADED
-                                        })
+                            .subscribe(boxName => {
+                                const messageKey = [email, boxName, preview.uid].join('/')
+                                console.log(messageKey)
+                                let cachedMessage = new Map<string, Message>(Object.entries(this.messageProvider.cachedMessagesManager.get())).get(messageKey)
+
+                                if (cachedMessage) {
+                                    this.messageProvider.currentMessage.set(cachedMessage)
+                                    this.statusProvider.status.set({
+                                        target: Target.CURRENT_MESSAGE,
+                                        event: Event.LOADED
                                     })
-                            )
+                                } else {
+                                    this.messageService.getMessage(email, boxName, preview.uid)
+                                        .subscribe(message => {
+                                            this.messageProvider.currentMessage.set(message)
+                                            this.statusProvider.status.set({
+                                                target: Target.CURRENT_MESSAGE,
+                                                event: Event.LOADED
+                                            })
+                                        })
+                                }
+                            })
                     )
             })
     }

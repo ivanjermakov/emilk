@@ -10,6 +10,7 @@ import {environment} from '../../environments/environment'
 import {StatusProvider} from './status.provider'
 import {Target} from '../model/Target'
 import {Event} from '../model/Event'
+import {LocalStorageManager} from '../util/local-storage-manager'
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,10 @@ export class MessageProvider {
 
     messagePreviews: ObservableData<MessagePreview[]> = new ObservableData<MessagePreview[]>()
     currentMessage: ObservableData<Message> = new ObservableData<Message>()
+    /**
+     * Key is in format `${accountName}/${boxName}/${uid}`
+     */
+    cachedMessagesManager: LocalStorageManager = new LocalStorageManager('cachedMessages', new Map<string, Message>())
 
     constructor(
         private messageService: MessageService,
@@ -39,14 +44,26 @@ export class MessageProvider {
                         first(),
                         map(a => a.user)
                     )
-                    .subscribe(email =>
+                    .subscribe(email => {
                         this.messageService
                             .getPage(email, 0, environment.initFetchSize)
                             .subscribe(previews => {
                                 this.messagePreviews.set(previews.reverse())
                                 this.statusProvider.status.set({target: Target.MESSAGES, event: Event.LOADED})
                             })
-                    )
+
+                        this.currentMessage.observable
+                            .pipe(filter(m => !!m))
+                            .subscribe(message => {
+                                const messageKey = [email, box.name, message.uid].join('/')
+                                if (!new Map(Object.entries(this.cachedMessagesManager.get())).get(messageKey)) {
+                                    this.cachedMessagesManager.update(obj => {
+                                        obj[messageKey] = message
+                                        return obj
+                                    })
+                                }
+                            })
+                    })
             })
     }
 
